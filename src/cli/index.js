@@ -75,6 +75,9 @@ export default class Cli {
                         args
                     );
                     break;
+                case 'os':
+                    this.os.run(args);
+                    break;
                 default:
                     console.log('Unknown command');
             }
