@@ -16,4 +16,8 @@ export default class FileOperation {
     async rn(currentDir, args) {
         return await rn(currentDir, args);
     }
+
+    async cp(currentDir, args) {
+        return await cp(currentDir, args);
+    }
 }
