@@ -12,4 +12,8 @@ export default class FileOperation {
     async mkdir(currentDir, args) {
         return await mkdir(currentDir, args);
     }
+
+    async rn(currentDir, args) {
+        return await rn(currentDir, args);
+    }
 }
