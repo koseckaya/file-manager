@@ -8,4 +8,8 @@ export default class FileOperation {
     async add(currentDir, args) {
         return await add(currentDir, args);
     }
+
+    async mkdir(currentDir, args) {
+        return await mkdir(currentDir, args);
+    }
 }
