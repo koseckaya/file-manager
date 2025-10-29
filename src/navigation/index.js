@@ -8,34 +8,18 @@ class Navigation {
     constructor() {
         this.currentDir = os.homedir();
         process.chdir(this.currentDir);
-        this.#setupInputHandler();
-        this.printCurrentDirectory();
     }
 
-    printCurrentDirectory() {
-        console.log(`You are currently in ${this.currentDir}`);
+    up() {
+        this.currentDir = goUp(this.currentDir);
     }
 
-    #setupInputHandler() {
-        process.stdin.on('data', (data) => {
-            const input = data.toString().trim();
-            const [command, ...args] = input.split(' ');
+    cd(args) {
+        this.currentDir = cd(this.currentDir, args);
+    }
 
-            switch (command) {
-                case 'up':
-                    this.currentDir = goUp(this.currentDir);
-                    break;
-                case 'cd':
-                    this.currentDir = cd(this.currentDir, args);
-                    break;
-                case 'ls':
-                    this.currentDir = ls(this.currentDir);
-                    break;
-                default:
-                    console.log('Unknown command');
-            }
-            this.printCurrentDirectory();
-        });
+    ls() {
+        ls(this.currentDir);
     }
 }
 
