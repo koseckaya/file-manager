@@ -14,14 +14,6 @@ export const extractAllArguments = (command, userInput) => {
     );
 
     if (!commandConfig) {
-        console.error(`${os.EOL} Unknown command. Available commands:`);
-        console.table(
-            Object.values(COMMANDS_MAP).map((cmd) => ({
-                Command: cmd.name,
-                Description: cmd.description,
-                Example: cmd.example,
-            }))
-        );
         return;
     }
 
@@ -73,3 +65,14 @@ export const parseInput = (userInput) => {
 
     return { command, args };
 };
+
+export function invalidCommand() {
+    console.log(`${os.EOL} Unknown command. Available commands:`);
+    console.table(
+        Object.values(COMMANDS_MAP).map((cmd) => ({
+            Command: cmd.name,
+            Description: cmd.description,
+            Example: cmd.example,
+        }))
+    );
+}

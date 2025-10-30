@@ -1,44 +1,19 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
+import path from 'node:path';
+import { pipeline } from 'node:stream/promises';
+import { resolvePath } from '../../helper';
 
-export default function cp(currentDir, args) {
-    return new Promise((resolve) => {
-        if (!args || args.length < 2) {
-            console.error('Invalid input');
-            resolve();
-        }
+export default async function cp(currentDir, args) {
+    const sourcePath = resolvePath(currentDir, args[0]);
+    const sourceFileName = path.basename(sourcePath);
+    const destFolderPath = resolvePath(currentDir, args[1]);
+    const targetPath = path.resolve(destFolderPath, sourceFileName);
 
-        try {
-            const sourcePath = path.isAbsolute(args[0])
-                ? args[0]
-                : path.resolve(currentDir, args[0]);
+    await fs.access(sourcePath);
 
-            const targetPath = path.isAbsolute(args[1])
-                ? path.resolve(args[1], path.basename(sourcePath))
-                : path.resolve(currentDir, args[1], path.basename(sourcePath));
+    const readStream = createReadStream(sourcePath);
+    const writeStream = createWriteStream(targetPath);
 
-            const readStream = fs.createReadStream(sourcePath);
-            const writeStream = fs.createWriteStream(targetPath);
-
-            readStream.on('error', (error) => {
-                console.error(`Operation failed:${error}`);
-                resolve();
-            });
-
-            writeStream.on('error', (error) => {
-                console.error(`Operation failed:${error}`);
-                resolve();
-            });
-            д;
-
-            writeStream.on('finish', () => {
-                resolve();
-            });
-
-            readStream.pipe(writeStream);
-        } catch (error) {
-            console.error(`Operation failed:${error}`);
-            resolve();
-        }
-    });
+    await pipeline(readStream, writeStream);
 }
