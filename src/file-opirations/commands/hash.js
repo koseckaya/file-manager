@@ -1,6 +1,6 @@
 import fs from 'fs';
-import path from 'path';
 import crypto from 'crypto';
+import { resolvePath } from '../../helper';
 
 export default function hash(currentDir, args) {
     return new Promise((resolve) => {
@@ -10,9 +10,7 @@ export default function hash(currentDir, args) {
         }
 
         try {
-            const filePath = path.isAbsolute(args[0])
-                ? args[0]
-                : path.resolve(currentDir, args[0]);
+            const filePath = resolvePath(currentDir, args[0]);
 
             const readStream = fs.createReadStream(filePath);
             const hash = crypto.createHash('sha256');

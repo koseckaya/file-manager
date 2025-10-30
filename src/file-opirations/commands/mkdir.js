@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import { resolvePath } from '../../helper';
 
 export default function mkdir(currentDir, args) {
     return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ export default function mkdir(currentDir, args) {
         }
 
         try {
-            const dirPath = path.resolve(currentDir, args[0]);
+            const dirPath = resolvePath(currentDir, args[0]);
 
             fs.mkdir(dirPath, (err) => {
                 if (err) {

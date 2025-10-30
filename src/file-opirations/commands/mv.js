@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { resolvePath } from '../../helper';
 
 export default function mv(currentDir, args) {
     return new Promise((resolve) => {
@@ -9,13 +10,8 @@ export default function mv(currentDir, args) {
         }
 
         try {
-            const sourcePath = path.isAbsolute(args[0])
-                ? args[0]
-                : path.resolve(currentDir, args[0]);
-
-            const targetPath = path.isAbsolute(args[1])
-                ? args[1]
-                : path.resolve(currentDir, args[1]);
+            const sourcePath = resolvePath(currentDir, args[0]);
+            const targetPath = resolvePath(currentDir, args[1]);
 
             const finalTargetPath =
                 fs.existsSync(targetPath) &&

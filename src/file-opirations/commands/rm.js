@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import { resolvePath } from '../../helper';
 
 export default function rm(currentDir, args) {
     return new Promise((resolve) => {
@@ -9,9 +9,7 @@ export default function rm(currentDir, args) {
         }
 
         try {
-            const filePath = path.isAbsolute(args[0])
-                ? args[0]
-                : path.resolve(currentDir, args[0]);
+            const filePath = resolvePath(currentDir, args[0]);
 
             fs.unlink(filePath, (err) => {
                 if (err) {

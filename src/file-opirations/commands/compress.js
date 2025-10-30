@@ -11,7 +11,6 @@ export default function compress(currentDir, args) {
 
         try {
             const sourcePath = resolvePath(currentDir, args[0]);
-
             const targetPath = resolvePath(currentDir, args[1]);
 
             const readStream = fs.createReadStream(sourcePath);
