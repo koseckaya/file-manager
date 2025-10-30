@@ -1,40 +1,19 @@
-import fs from 'fs';
-import zlib from 'zlib';
+import fs from 'node:fs/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import zlib from 'node:zlib';
 import { resolvePath } from '../../helper';
 
-export default function compress(currentDir, args) {
-    return new Promise((resolve) => {
-        if (!args || args.length < 2) {
-            console.error('Invalid input');
-            resolve();
-        }
+export default async function compress(currentDir, args) {
+    const sourcePath = resolvePath(currentDir, args[0]);
+    const targetPath = resolvePath(currentDir, args[1]);
 
-        try {
-            const sourcePath = resolvePath(currentDir, args[0]);
-            const targetPath = resolvePath(currentDir, args[1]);
+    await fs.access(sourcePath);
 
-            const readStream = fs.createReadStream(sourcePath);
-            const writeStream = fs.createWriteStream(targetPath);
-            const brotli = zlib.createBrotliCompress();
+    const readStream = createReadStream(sourcePath);
+    const writeStream = createWriteStream(targetPath);
 
-            readStream.on('error', (error) => {
-                console.error(`Operation failed:${error}`);
-                resolve();
-            });
+    const brotli = zlib.createBrotliCompress();
 
-            writeStream.on('error', (error) => {
-                console.error(`Operation failed:${error}`);
-                resolve();
-            });
-
-            writeStream.on('finish', () => {
-                resolve();
-            });
-
-            readStream.pipe(brotli).pipe(writeStream);
-        } catch (error) {
-            console.error(`Operation failed:${error}`);
-            resolve();
-        }
-    });
+    await pipeline(readStream, brotli, writeStream);
 }

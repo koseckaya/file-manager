@@ -1,6 +1,7 @@
 import path from 'path';
 import os from 'os';
 import { COMMANDS_MAP } from './constants.js';
+import { OS_COMMANDS } from './commands.js';
 
 export function resolvePath(currentDir, filePath) {
     return path.isAbsolute(filePath)
@@ -73,6 +74,17 @@ export function invalidCommand() {
             Command: cmd.name,
             Description: cmd.description,
             Example: cmd.example,
+        }))
+    );
+}
+
+export function invalidOsCommand() {
+    console.log(`${os.EOL} Unknown OS command. Available OS commands`);
+    console.table(
+        Object.entries(OS_COMMANDS).map(([key, value]) => ({
+            Command: value,
+            Description: `Get ${key.toLowerCase()} information`,
+            Example: `os ${value}`,
         }))
     );
 }
