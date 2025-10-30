@@ -1,28 +1,11 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { resolvePath } from '../../helper';
 
-export default function rn(currentDir, args) {
-    return new Promise((resolve, reject) => {
-        if (!args || args.length < 2) {
-            console.error('Invalid input');
-            resolve();
-        }
+export default async function rn(currentDir, args) {
+    const oldPath = resolvePath(currentDir, args[0]);
+    const newFileName = path.basename(args[1]);
+    const newPath = path.resolve(path.dirname(oldPath), newFileName);
 
-        try {
-            const oldPath = resolvePath(currentDir, args[0]);
-            const newPath = path.resolve(path.dirname(oldPath), args[1]);
-
-            fs.rename(oldPath, newPath, (err) => {
-                if (err) {
-                    console.error('Operation failed');
-                    resolve();
-                }
-                resolve();
-            });
-        } catch (error) {
-            console.error('Operation failed');
-            resolve();
-        }
-    });
+    await fs.rename(oldPath, newPath);
 }
