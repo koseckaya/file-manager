@@ -1,4 +1,5 @@
-import path from 'path';
+import path from 'node:path';
+import { chdir } from 'node:process';
 
 export default function goUp(currentDir) {
     const parentDir = path.dirname(currentDir);
@@ -8,7 +9,7 @@ export default function goUp(currentDir) {
     }
 
     try {
-        process.chdir(parentDir);
+        chdir(parentDir);
     } catch (error) {
         console.error('Operation failed');
     }
