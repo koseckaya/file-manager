@@ -1,26 +1,10 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs/promises';
+import { resolvePath } from '../../helper';
 
-export default function add(currentDir, args) {
-    return new Promise((resolve, reject) => {
-        if (!args || args.length === 0) {
-            console.error('Invalid input');
-            resolve();
-        }
+export default async function add(currentDir, args) {
+    const filePath = resolvePath(currentDir, args[0]);
 
-        try {
-            const filePath = path.resolve(currentDir, args[0]);
+    await fs.writeFile(filePath, '', { flag: 'wx' });
 
-            fs.writeFile(filePath, '', (err) => {
-                if (err) {
-                    console.error('Operation failed');
-                    resolve();
-                }
-                resolve();
-            });
-        } catch (error) {
-            console.error('Operation failed');
-            resolve();
-        }
-    });
+    console.log(`File added successfully ${filePath}`);
 }
