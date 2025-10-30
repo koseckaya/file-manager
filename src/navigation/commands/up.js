@@ -7,11 +7,6 @@ export default function goUp(currentDir) {
     if (parentDir === currentDir) {
         return currentDir;
     }
-
-    try {
-        chdir(parentDir);
-    } catch (error) {
-        console.error('Operation failed');
-    }
+    chdir(parentDir);
     return parentDir;
 }
