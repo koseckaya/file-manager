@@ -1,28 +1,10 @@
-import fs from 'fs';
+import fs from 'node:fs/promises';
 import { resolvePath } from '../../helper';
 
-export default function mkdir(currentDir, args) {
-    return new Promise((resolve, reject) => {
-        if (!args || args.length === 0) {
-            console.error('Invalid input');
-            resolve();
-            return;
-        }
+export default async function mkdir(currentDir, args) {
+    const dirPath = resolvePath(currentDir, args[0]);
 
-        try {
-            const dirPath = resolvePath(currentDir, args[0]);
+    await fs.mkdir(dirPath, { recursive: false });
 
-            fs.mkdir(dirPath, (err) => {
-                if (err) {
-                    console.error('Operation failed');
-                    resolve();
-                    return;
-                }
-                resolve();
-            });
-        } catch (error) {
-            console.error('Operation failed');
-            resolve();
-        }
-    });
+    console.log(`Directory created successfull ${dirPath}`);
 }
