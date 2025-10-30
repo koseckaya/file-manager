@@ -1,5 +1,5 @@
 import os from 'os';
-import { OS_COMMANDS } from '../cli/commands.js';
+import { OS_COMMANDS } from '../commands.js';
 
 export default class OperatingSystem {
     run(arg) {
