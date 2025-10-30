@@ -99,6 +99,8 @@ export default class Cli {
                             args
                         );
                         break;
+                    case COMMANDS_MAP.EXIT.name:
+                        process.exit(0);
                     default:
                         console.log('Unknown command');
                 }
