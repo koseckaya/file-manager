@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { resolvePath } from '../../helper';
+import { resolvePath } from '../../helper.js';
 
 export default async function rn(currentDir, args) {
     const oldPath = resolvePath(currentDir, args[0]);

@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import { createReadStream, createWriteStream } from 'node:fs';
 import { pipeline } from 'node:stream/promises';
 import zlib from 'node:zlib';
-import { resolvePath } from '../../helper';
+import { resolvePath } from '../../helper.js';
 
 export default async function compress(currentDir, args) {
     const sourcePath = resolvePath(currentDir, args[0]);

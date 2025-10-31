@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import { createReadStream, createWriteStream } from 'node:fs';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
-import { resolvePath } from '../../helper';
+import { resolvePath } from '../../helper.js';
 
 export default async function cp(currentDir, args) {
     const sourcePath = resolvePath(currentDir, args[0]);

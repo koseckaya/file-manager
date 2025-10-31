@@ -2,7 +2,7 @@ import fs from 'fs';
 import crypto from 'crypto';
 import { pipeline } from 'node:stream/promises';
 import { stdout } from 'node:process';
-import { resolvePath } from '../../helper';
+import { resolvePath } from '../../helper.js';
 
 export default async function hash(currentDir, args) {
     const filePath = resolvePath(currentDir, args[0]);

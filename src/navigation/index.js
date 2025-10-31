@@ -10,6 +10,10 @@ class Navigation {
         process.chdir(this.currentDir);
     }
 
+    getCurrentDirectory() {
+        return this.currentDir;
+    }
+
     up() {
         this.currentDir = goUp(this.currentDir);
     }

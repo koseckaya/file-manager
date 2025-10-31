@@ -1,15 +1,17 @@
 import process from 'process';
 import User from '../user/index.js';
-import Navigation from '../navigation/index.js';
-import FileOperation from '../file-operation/index.js';
 import { COMMANDS_MAP } from '../commands.js';
 import { invalidCommand, parseInput } from '../helper.js';
+import FileOperation from '../file-opirations/index.js';
+import OperatingSystem from '../operation-system/index.js';
+import Navigation from '../navigation/index.js';
 
 export default class Cli {
     constructor() {
         this.user = new User();
         this.navigation = new Navigation();
         this.fileOperation = new FileOperation();
+        this.os = new OperatingSystem();
         this.#setupInputHandler();
         this.#printCurrentDirectory();
     }

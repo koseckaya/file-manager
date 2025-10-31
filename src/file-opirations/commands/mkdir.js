@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import { resolvePath } from '../../helper';
+import { resolvePath } from '../../helper.js';
 
 export default async function mkdir(currentDir, args) {
     const dirPath = resolvePath(currentDir, args[0]);
